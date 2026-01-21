@@ -41,7 +41,7 @@ const HeroSection = () => {
                     </div>
 
                     {/* Right Column: Modular Blocks SVG */}
-                    <div className="flex-1 w-full max-w-lg md:max-w-none relative flex justify-center items-center opacity-20 md:opacity-100 translate-y-8 md:translate-y-0">
+                    <div className="hidden md:flex flex-1 w-full max-w-lg md:max-w-none relative justify-center items-center opacity-20 md:opacity-100 translate-y-8 md:translate-y-0">
                         <div className="relative w-full aspect-square max-w-[450px]">
                             <ModularBlocksSVG />
 
