@@ -15,9 +15,28 @@ const containerVariants = {
     }
 };
 
-const cardVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1 }
+const itemVariantsLeft = {
+    hidden: { opacity: 0, x: -100 },
+    visible: {
+        opacity: 1,
+        x: 0,
+        transition: {
+            duration: 1.2,
+            ease: [0.22, 1, 0.36, 1]
+        }
+    }
+};
+
+const itemVariantsRight = {
+    hidden: { opacity: 0, x: 100 },
+    visible: {
+        opacity: 1,
+        x: 0,
+        transition: {
+            duration: 1.2,
+            ease: [0.22, 1, 0.36, 1]
+        }
+    }
 };
 
 const CapabilitiesSection = () => {
@@ -108,48 +127,45 @@ const CapabilitiesSection = () => {
                     </motion.div>
                 </div>
 
-                {/* Capability Pillars Grid */}
+                {/* Capability Pillars List */}
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, margin: "-100px" }}
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
+                    className="flex flex-col gap-6 max-w-5xl mx-auto"
                 >
                     {pillars.map((pillar, index) => (
                         <motion.div
                             key={index}
-                            variants={cardVariants}
-                            className="group relative rounded-2xl border border-slate-200 bg-white/65 backdrop-blur-lg hover:border-slate-300 transition-all duration-300 flex flex-col items-start h-full overflow-hidden"
+                            variants={index % 2 === 0 ? itemVariantsLeft : itemVariantsRight}
+                            className="group relative flex flex-col md:flex-row items-center gap-8 p-8 rounded-3xl border border-slate-200/60 bg-white/70 backdrop-blur-xl hover:border-slate-300 hover:shadow-2xl hover:shadow-slate-200/50 transition-all duration-500"
                         >
-                            {/* Visual Preview Plate */}
-                            <div className="w-full h-44 bg-slate-50 border-b border-slate-100 flex items-center justify-center relative overflow-hidden">
-                                <div className="absolute inset-0 opacity-[0.03]">
-                                    <svg width="100%" height="100%">
-                                        <pattern id={`pillar-pattern-${index}`} width="10" height="10" patternUnits="userSpaceOnUse">
-                                            <rect width="1" height="1" fill="currentColor" className="text-slate-900" />
-                                        </pattern>
-                                        <rect width="100%" height="100%" fill={`url(#pillar-pattern-${index})`} />
-                                    </svg>
-                                </div>
-                                <div className="relative z-10 transform transition-transform duration-500 group-hover:scale-110">
+                            {/* Icon Section */}
+                            <div className="relative flex-shrink-0">
+                                <div className="absolute inset-0 bg-slate-100 rounded-2xl scale-110 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                <div className="relative z-10 transition-transform duration-500 group-hover:scale-110">
                                     {pillar.icon}
                                 </div>
                             </div>
 
-                            <div className="p-8 flex flex-col flex-grow">
-                                <h3 className="text-lg font-bold text-slate-900 mb-2 transition-colors">
-                                    {pillar.title}
-                                </h3>
-                                <p className="text-slate-600 leading-relaxed text-sm mb-6 flex-grow">
+                            {/* Text Section */}
+                            <div className="flex-grow text-center md:text-left">
+                                <div className="flex flex-col md:flex-row md:items-center gap-4 mb-3">
+                                    <h3 className="text-2xl font-bold text-slate-900 tracking-tight">
+                                        {pillar.title}
+                                    </h3>
+                                    <div className="hidden md:block h-1.5 w-1.5 rounded-full bg-slate-300" />
+                                    <span className="text-[11px] font-black tracking-[0.2em] text-slate-400 uppercase">
+                                        {pillar.keywords}
+                                    </span>
+                                </div>
+                                <p className="text-lg text-slate-600 leading-relaxed font-medium max-w-2xl">
                                     {pillar.description}
                                 </p>
-                                <div className="w-full pt-4 border-t border-slate-100">
-                                    <p className="text-[10px] font-black tracking-widest text-slate-400 uppercase">
-                                        {pillar.keywords}
-                                    </p>
-                                </div>
                             </div>
+
+
                         </motion.div>
                     ))}
                 </motion.div>
